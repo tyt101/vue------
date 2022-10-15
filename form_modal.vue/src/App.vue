@@ -11,7 +11,9 @@
         <button type="submit" @click="handleValidate">校验</button>
       </MyFormItem>
     </MyForm>
-    
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -19,12 +21,13 @@
 import MyForm from './components/form.vue'
 import MyFormItem from './components/form-item.vue'
 import MyInput from "./components/input.vue";
+
 export default {
   name: 'App',
   components: {
     MyForm,
     MyFormItem,
-    MyInput
+    MyInput,
   },
   
   data() {
@@ -42,11 +45,13 @@ export default {
   methods:{
     handleValidate(){
       this.$refs['myform'].validate(valid=>{
-        if(valid){
-          alert("校验成功")
-        }else{
-          alert("校验失败")
-        }
+        console.log("valid:",valid)
+          const notice = this.$modal({
+            title:"我的提示",
+            message:valid?"请求登录":"校验失败",
+            duration:1000
+          })
+          notice.show()
       })
     }
   }

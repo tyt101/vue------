@@ -8,8 +8,10 @@
 
 <script>
 import Schema from 'async-validator'
+import emitter from '@/mixins/emitter'
 export default {
     name:'MyFormItem',
+    mixins:[emitter],
     inject:{
         myform:{
             default:{}
@@ -47,6 +49,10 @@ export default {
         this.$on('validate',()=>{
             this.validate()
         })
+        if(this.prop){
+            // 派发事件，通过MyForm新增一个字段
+            this.dispatch('MyForm','kkb.form.addField',[this])
+        }
     },
 }
 </script>

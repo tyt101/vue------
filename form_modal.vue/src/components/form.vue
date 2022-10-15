@@ -7,6 +7,7 @@
 <script>
 export default {
     name:'MyForm',
+    componentName:'MyForm',
     provide(){
         return{
             myform:this
@@ -21,11 +22,19 @@ export default {
             type:Object,
         }
     },
+    created() {
+        this.fields = []
+        this.$on('kkb.form.addField',item=>{
+            this.fields.push(item)
+        })
+    },
     methods:{
         validate(cb){
-            const tasks = this.$children.filter(item=>item.prop).map(row=>{
-                return row.validate()
-            })
+            // 获取所有的孩子MyFormItem
+            // const tasks = this.$children.filter(item=>item.prop).map(row=>{
+            //     return row.validate()
+            // })
+            const tasks = this.fields.map(item=>item.validate())
             Promise.all(tasks).then(()=>{
                 console.log('isOk')
                 cb(true)
