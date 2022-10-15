@@ -1,5 +1,8 @@
 <template>
-  <div>This is My About Component</div>
+  <div>
+    <p>This is My About Component</p>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

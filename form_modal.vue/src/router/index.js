@@ -13,7 +13,16 @@ const routes = [{
     path: '/about',
     name: 'about',
     component: () =>
-        import ('../view/About.vue')
+        import ('../view/About.vue'),
+    children:[{
+        path:'/about/info',
+        name:'info',
+        component:{
+            render(h){
+                return h('div','tyt')
+            }
+        }
+    }]
 }]
 
 const router = new VueRouter({
