@@ -5,17 +5,27 @@ class Store {
         this._actions = options.actions
         this._getters = options.getters
 
+        
+        
         // 通过new Vue直接实现了响应式
         // 通过Vue.util.defineReactive实现响应式
         // 通过Vue.$set的方式实现响应式
         this.state = new Vue({
-            data: options.state,
+            data:options.state,
+        })
+        var store = this
+        Object.keys(this._getters).forEach(key=>{
+            let fn = this._getters[key]
+            Object.defineProperty(store.getters,key,{
+                get: () => {
+                    return fn(store.state)
+                }
+            })
         })
 
         // 改变this指向，指向Store。
         this.commit = this.commit.bind(this)
         this.dispatch = this.dispatch.bind(this)
-        this.getters = this.getters.apply(this)
     }
     commit(type, payload) {
         const entry = this._mutations[type]

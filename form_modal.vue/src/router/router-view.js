@@ -1,6 +1,5 @@
 export default {
     render(h) {
-
         this.$vnode.data.routerView = true
         let dept = 0
         let parent = this.$parent
